@@ -179,6 +179,7 @@ class Worker():
 		history = self.model.fit(self.x[:100],self.y[:100],epochs=epochs, batch_size=batch_size, callbacks=[self.my_callback_object])
 		print(history)		
 		print(dir(history))
+		print(history.history)
 		self.put_in_Dynamo(history)
 
 	def put_in_Dynamo(self, *args):
