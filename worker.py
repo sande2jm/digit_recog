@@ -27,16 +27,7 @@ class My_callback(keras.callbacks.Callback):
 
     def on_batch_end(self, batch, logs={}):
         	pass	   
-	def report(self,i, size = 100):
-		"""
-		Post to swarm queue my progress and state
-		"""
-		d = {
-			'message': self.state,
-			'id': self.my_id,
-			'progress': round((i*32/(size)*4),4)
-	        }
-	        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')	        
+        
 
 class Worker():
 
