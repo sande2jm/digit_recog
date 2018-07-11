@@ -97,9 +97,9 @@ class Worker():
 		    ExpressionAttributeNames={
 		        '#a': 'batch_size',
 		        '#b': 'learning_rate',
-		        '#c': 'epochs'
-		        '#d': 'dropout_rate'
-		        '#e': 'train'
+		        '#c': 'epochs',
+		        '#d': 'dropout_rate',
+		        '#e': 'train',
 		        '#f': 'test'
 
 		    },
