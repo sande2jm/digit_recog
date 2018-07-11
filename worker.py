@@ -184,7 +184,7 @@ class Worker():
 
 	def put_in_Dynamo(self, *args):
 		acc = args
-		print(acc[0], acc)
+		print(acc[0][0], acc)
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
@@ -214,7 +214,7 @@ class Worker():
 		        ':val4': decimal.Decimal(str(dropout_rate)),
 		        ':val5': train,
 		        ':val6': test,
-		        ':val7': decimal.Decimal(str(acc[0]))
+		        ':val7': decimal.Decimal(str(acc[0][0]))
 		    }
 		)
 
