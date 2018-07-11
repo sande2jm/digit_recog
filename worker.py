@@ -195,7 +195,7 @@ class Worker():
 		    Key={
 		    'id': self.my_id
 		    },
-		    UpdateExpression='SET #a = :val1, #b = :val2, #c = :val3, #d = :val4, #e = :val5, #f = :val6 #g = :val7', 
+		    UpdateExpression='SET #a = :val1, #b = :val2, #c = :val3, #d = :val4, #e = :val5, #f = :val6, #g = :val7', 
 		    ExpressionAttributeNames={
 		        '#a': 'batch_size',
 		        '#b': 'learning_rate',
