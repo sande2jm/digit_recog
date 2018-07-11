@@ -112,8 +112,6 @@ class Worker():
 		print(self.y.shape, type(self.y))
 
 	def setup_model(self):
-
-		self.setup_model()
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
