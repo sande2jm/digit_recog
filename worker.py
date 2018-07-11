@@ -39,6 +39,7 @@ class My_callback(keras.callbacks.Callback):
         	d = {
             'message': self.state,
             'id': self.my_id,
+            'state': self.state
             'progress': round((batch*32/(42000)*4),4)}
         	response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
         	print(response)
