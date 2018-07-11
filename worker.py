@@ -180,10 +180,10 @@ class Worker():
 		print(history)		
 		print(dir(history))
 		print(history.history)
-		self.put_in_Dynamo(history)
+		self.put_in_Dynamo(history.history['acc'])
 
 	def put_in_Dynamo(self, *args):
-		history = args
+		acc = args
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
