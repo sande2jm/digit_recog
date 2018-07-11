@@ -47,6 +47,27 @@ class Worker():
 			swarm_params = json.load(f)
 		self.params = swarm_params[self.my_id]
 		self.s3.Bucket('swarm-instructions').download_file(self.params['train'],self.params['train'])
+
+		df = pd.read_csv(self.params['train'])
+		df.head()
+
+		self.y = df['label'].tolist()
+
+		print(self.y[:10])
+
+		imgs = df.loc[:,'pixel0':'pixel783']
+
+		imgs.head()
+		self.x = []
+		for row in imgs.values.tolist():
+		    self.x.append(np.reshape(np.asarray(row), (28,28,1)))
+
+		self.x = np.asarray(self.x)
+		self.y = np.asarray(self.y)
+		#I am now trying to achieve this through keras with their system
+		self.y = utils.to_categorical(self.y, num_classes=10)
+		print(self.x.shape, type(self.x))
+		print(self.y.shape, type(self.y))
 		
 
 
