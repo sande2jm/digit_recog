@@ -112,8 +112,15 @@ class Worker():
 		print(self.y.shape, type(self.y))
 
 	def setup_model(self):
+
+		self.setup_model()
+		batch_size = self.params['batch_size']
+		learning_rate = self.params['learning_rate']
+		epochs = self.params['epochs']
+		epochs = self.params['epochs']
+		dropout_rate = self.params['dropout_rate']
 	
-		adam = optimizers.Adam(lr=0.0001)
+		adam = optimizers.Adam(lr=learning_rate)
 		self.model = Sequential()
 		self.model.add(Conv2D(64,(3,3),padding='same',
 		                 data_format = "channels_last",input_shape=(28,28,1)))
@@ -131,7 +138,7 @@ class Worker():
 		self.model.add(Activation('relu'))
 		self.model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-		self.model.add(Dropout(rate=.10))
+		self.model.add(Dropout(rate=dropout_rate))
 		self.model.add(Flatten())
 		self.model.add(Dense(100))
 		self.model.add(Dense(10, activation='softmax'))
@@ -151,8 +158,8 @@ class Worker():
 		epochs = self.params['epochs']
 		epochs = self.params['epochs']
 		dropout_rate = self.params['dropout_rate']
-		x = self.params['train']
-		y = self.params['test']
+		# x = self.params['train']
+		# y = self.params['test']
 
 		size = 10000
 		i = 0
