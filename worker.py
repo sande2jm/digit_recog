@@ -25,15 +25,20 @@ class My_callback(keras.callbacks.Callback):
     def on_train_begin(self, logs={}):
     	pass
 
-    def on_batch_end(self, batch, logs={}):
-        	while self.state[0] == 'pause':
-        		time.sleep(.3)
-        	d = {
+   	def report(self,batch,size=100):
+   		d = {
             'message': "working",
             'id': self.my_id,
             'state': self.state,
-            'progress': round(batch*32/(42000*4),4)}
-        	response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')       
+            'progress': round(batch*32/(size*4),4)}
+        	response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+
+    def on_batch_end(self, batch, logs={}):        	
+        	self.report(batch,size=42000)
+        	while self.state[0] == 'pause':
+        		self.report(batch,size=42000)
+        		time.sleep(.3)
+        	       
         	# self.report(batch, size=42000)
 	        # while self.state == 'pause':
 	        # 	self.report(batch, size=42000)
