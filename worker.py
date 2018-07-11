@@ -18,21 +18,21 @@ from keras import optimizers
 import keras
 
 class My_callback(keras.callbacks.Callback):
-	def __init__(self,queue,my_id, state,):
-		self.queue = queue
-		self.state = state
-		self.my_id = my_id
+    def __init__(self,queue,my_id, state,):
+        self.queue = queue
+        self.state = state
+        self.my_id = my_id
     def on_train_begin(self, logs={}):
-		print("BEGINNNN")
+    	print("BEGINNNN")
 
     def report(self, i, size=100):
-		print('reporting')
-		d = {
-			'message': self.state,
-			'id': self.my_id,
-			'progress': round((i*32/(42000)*4),4)
-		}
-		response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+        print('reporting')
+        d = {
+            'message': self.state,
+            'id': self.my_id,
+            'progress': round((i*32/(42000)*4),4)
+        }
+        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
 
     def on_batch_end(self, batch, logs={}):
         	print("FUCKKKKK")
