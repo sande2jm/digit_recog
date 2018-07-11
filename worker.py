@@ -26,7 +26,12 @@ class My_callback(keras.callbacks.Callback):
     	return
 
     def report(self):
-    	pass
+		d = {
+		'message': self.state,
+		'id': self.my_id,
+		'progress': round((i*32/(size)*4),4)
+		}
+		response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
 
     def on_batch_end(self, batch, logs={}):
         	if batch%10 == 0:
