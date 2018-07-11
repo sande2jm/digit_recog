@@ -176,8 +176,10 @@ class Worker():
 		# 	i += 1
 		# end = time.clock()
 		self.my_callback_object = My_callback(self.queue, self.my_id, self.state)
-		history = self.model.fit(self.x,self.y,epochs=1, callbacks=[self.my_callback_object])
+		history = self.model.fit(self.x[:100],self.y[:100],epochs=epochs, batch_size=batch_size callbacks=[self.my_callback_object])
 		print(history)
+		print(history.accuracy)
+		print(dir(history))
 		self.put_in_Dynamo(history)
 
 	def put_in_Dynamo(self, *args):
