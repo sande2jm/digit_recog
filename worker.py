@@ -213,7 +213,7 @@ class Worker():
 		        ':val4': decimal.Decimal(str(dropout_rate)),
 		        ':val5': train,
 		        ':val6': test,
-		        ':val7': history['accuracy']
+		        ':val7': acc
 		    }
 		)
 
