@@ -18,18 +18,21 @@ from keras import optimizers
 import keras
 
 class My_callback(keras.callbacks.Callback):
-    def __init__(self,queue,my_id, ):
+    def __init__(self,queue,my_id, state,):
         self.queue = queue
     def on_train_begin(self, logs={}):
     	return
 
     def on_batch_end(self, batch, logs={}):
-        d = {
-            'message': "working",
-            'id': "i-12342edse",
-            'progress': round((batch/(42000)*4),4)
-        }
-        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+        while state != 'exit':
+	        while state == 'pause':
+	        	time.sleep(.3)
+	        d = {
+	            'message': state,
+	            'id': my_id,
+	            'progress': round((batch*32/(42000)*4),4)
+	        }
+	        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
 
 class Worker():
 
@@ -157,7 +160,7 @@ class Worker():
 		# 		self.report(i,size=size)
 		# 	i += 1
 		# end = time.clock()
-		self.my_callback_object = My_callback(self.queue)
+		self.my_callback_object = My_callback(self.queue, self.my_id, self.state)
 		self.model.fit(self.x,self.y,epochs=4, callbacks=[self.my_callback_object])
 		self.put_in_Dynamo()
 
