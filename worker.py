@@ -39,6 +39,12 @@ class Worker():
 		self.dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 		self.table = self.dynamodb.Table('test')
 
+		"""MODEL SPECIFIC"""
+		self.x = None
+		self.y = None
+		self.model = None
+		self.my_callback_object = None
+
 
 	def check_in(self):
 		while True:
@@ -77,6 +83,33 @@ class Worker():
 		self.y = utils.to_categorical(self.y, num_classes=10)
 		print(self.x.shape, type(self.x))
 		print(self.y.shape, type(self.y))
+
+	def setup_model(self):
+	
+		adam = optimizers.Adam(lr=0.0001)
+		self.model = Sequential()
+		self.model.add(Conv2D(64,(3,3),padding='same',
+		                 data_format = "channels_last",input_shape=(28,28,1)))
+		self.model.add(BatchNormalization())
+		self.model.add(Activation('relu'))
+		self.model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+		self.model.add(Conv2D(64,(3,3),padding='same',
+		                 data_format = "channels_last",input_shape=(64,64,3)))
+		self.model.add(BatchNormalization())
+		self.model.add(Activation('relu'))
+		self.model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+		self.model.add(Conv2D(64,(3,3),padding='same',
+		                 data_format = "channels_last",input_shape=(64,64,3)))
+		self.model.add(BatchNormalization())
+		self.model.add(Activation('relu'))
+		self.model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+		self.model.add(Dropout(rate=.10))
+		self.model.add(Flatten())
+		self.model.add(Dense(100))
+		self.model.add(Dense(10, activation='softmax'))
+		self.model.compile(optimizer = adam, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+		self.model.summary()
 		
 
 
@@ -85,6 +118,7 @@ class Worker():
 		Take the params from extract and run whatever operations you want
 		on them. Set self.results in this method based on self.params
 		"""
+		setup_model()
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
