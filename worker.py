@@ -8,6 +8,7 @@ from threading import Thread
 import time
 import decimal
 import pandas as pd
+import numpy as np
 
 class Worker():
 
