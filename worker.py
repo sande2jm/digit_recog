@@ -26,6 +26,7 @@ class My_callback(keras.callbacks.Callback):
     	pass
 
     def on_batch_end(self, batch, logs={}):
+        	print(self.state)
         	while self.state == 'pause':
         		time.sleep(.3)
         	d = {
