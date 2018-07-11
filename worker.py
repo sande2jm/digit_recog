@@ -166,7 +166,7 @@ class Worker():
 		# 	i += 1
 		# end = time.clock()
 		self.my_callback_object = My_callback(self.queue, self.my_id, self.state)
-		self.model.fit(self.x,self.y,epochs=4, callbacks=[self.my_callback_object])
+		self.model.fit(self.x,self.y,epochs=1, callbacks=[self.my_callback_object])
 		self.put_in_Dynamo()
 
 	def put_in_Dynamo(self, *args):
