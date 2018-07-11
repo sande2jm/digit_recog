@@ -25,14 +25,15 @@ class My_callback(keras.callbacks.Callback):
     def on_train_begin(self, logs={}):
     	return
 
+    def report(self):
+    	pass
+
     def on_batch_end(self, batch, logs={}):
         	if batch%10 == 0:
         		self.report(batch, size=42000)
 	        while self.state == 'pause':
 	        	self.report(batch, size=42000)
-	        	time.sleep(.3)	   
-	def report(self, i, size=100):
-		pass	        
+	        	time.sleep(.3)		        
 
 class Worker():
 
