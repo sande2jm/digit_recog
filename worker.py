@@ -26,8 +26,7 @@ class My_callback(keras.callbacks.Callback):
     	return
 
     def report(self):
-		d = {
-		'message': self.state,
+		d = {'message': self.state,
 		'id': self.my_id,
 		'progress': round((i*32/(size)*4),4)
 		}
