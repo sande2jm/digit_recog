@@ -60,10 +60,10 @@ class Worker():
 		epochs = self.params['epochs']
 		epochs = self.params['epochs']
 		dropout_rate = self.params['dropout_rate']
-		x = params['train']
-		y = params['test']
+		x = self.params['train']
+		y = self.params['test']
 
-		size = len(json)
+		size = 10000
 		i = 0
 		while self.state[0] == 'waiting':
 			print("Waiting for GO") 
@@ -71,12 +71,12 @@ class Worker():
 
 		i = 0
 		start = time.clock()
-		while i < 10000 and self.state[0] != 'exit':
+		while i < size and self.state[0] != 'exit':
 			if i%100 == 0:
-				self.report(i, size=10000)
+				self.report(i, size=size)
 			while self.state[0] == 'pause':
 				time.sleep(.3)
-				self.report(i,size=10000)
+				self.report(i,size=size)
 			i += 1
 		end = time.clock()
 		self.put_in_Dynamo()
