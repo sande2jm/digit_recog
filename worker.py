@@ -17,6 +17,20 @@ from keras import utils
 from keras import optimizers
 import keras
 
+class My_callback(keras.callbacks.Callback):
+    def __init__(self,queue,my_id, ):
+        self.queue = queue
+    def on_train_begin(self, logs={}):
+    	return
+
+    def on_batch_end(self, batch, logs={}):
+        d = {
+            'message': "working",
+            'id': "i-12342edse",
+            'progress': round((batch/(42000)*4),4)
+        }
+        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+
 class Worker():
 
 	def __init__(self):
