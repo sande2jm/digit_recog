@@ -28,6 +28,7 @@ class My_callback(keras.callbacks.Callback):
     def on_batch_end(self, batch, logs={}):
         	print(self.state)
         	while self.state == 'pause':
+        		print("Inside infinte loop")
         		time.sleep(.3)
         	d = {
             'message': "working",
