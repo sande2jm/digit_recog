@@ -26,15 +26,22 @@ class My_callback(keras.callbacks.Callback):
     	return
 
     def on_batch_end(self, batch, logs={}):
-        while state != 'exit':
-	        while state == 'pause':
-	        	time.sleep(.3)
-	        d = {
-	            'message': self.state,
-	            'id': self.my_id,
-	            'progress': round((batch*32/(42000)*4),4)
+        	if batch %10:
+        		self.report(batch, size=42000)
+	        while self.state == 'pause':
+	        	self.report(batch, size=42000)
+	        	time.sleep(.3)	   
+
+	def report(self,i, size = 100):
+		"""
+		Post to swarm queue my progress and state
+		"""
+		d = {
+			'message': self.state,
+			'id': self.my_id,
+			'progress': round((i*32/(size)*4),4)
 	        }
-	        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+	        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')	        
 
 class Worker():
 
@@ -197,17 +204,6 @@ class Worker():
 		    }
 		)
 
-
-	def report(self,i, size = 100):
-		"""
-		Post to swarm queue my progress and state
-		"""
-		d = {
-		'message': 'working',
-		'state': self.state[0],
-		'id': self.my_id,
-		'progress': round(i/size,4)}
-		response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='bots')
 
 	def dump(self):
 		"""
