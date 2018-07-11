@@ -147,16 +147,18 @@ class Worker():
 			print("Waiting for GO") 
 			time.sleep(.3)
 
-		i = 0
-		start = time.clock()
-		while i < size and self.state[0] != 'exit':
-			if i%100 == 0:
-				self.report(i, size=size)
-			while self.state[0] == 'pause':
-				time.sleep(.3)
-				self.report(i,size=size)
-			i += 1
-		end = time.clock()
+		# i = 0
+		# start = time.clock()
+		# while i < size and self.state[0] != 'exit':
+		# 	if i%100 == 0:
+		# 		self.report(i, size=size)
+		# 	while self.state[0] == 'pause':
+		# 		time.sleep(.3)
+		# 		self.report(i,size=size)
+		# 	i += 1
+		# end = time.clock()
+		self.my_callback_object = My_callback(self.queue)
+		self.model.fit(self.x,self.y,epochs=4, callbacks=[self.my_callback_object])
 		self.put_in_Dynamo()
 
 	def put_in_Dynamo(self, *args):
