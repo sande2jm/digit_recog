@@ -18,26 +18,26 @@ from keras import optimizers
 import keras
 
 class My_callback(keras.callbacks.Callback):
-    def __init__(self,queue,my_id, state,):
-        self.queue = queue
-        self.state = state
-        self.my_id = my_id
-    def on_train_begin(self, logs={}):
-    	pass
+	def __init__(self,queue,my_id, state,):
+		self.queue = queue
+		self.state = state
+		self.my_id = my_id
+	def on_train_begin(self, logs={}):
+		pass
 
-   	def report(self,batch,size=100):
-   		d = {
-            'message': "working",
-            'id': self.my_id,
-            'state': self.state,
-            'progress': round(batch*32/(size*4),4)}
-        	response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
+	def report(self,batch,size=100):
+		d = {
+			'message': "working",
+			'id': self.my_id,
+			'state': self.state,
+			'progress': round(batch*32/(size*4),4)}
+		response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
 
-    def on_batch_end(self, batch, logs={}):        	
-        	self.report(batch,size=42000)
-        	while self.state[0] == 'pause':
-        		self.report(batch,size=42000)
-        		time.sleep(.3)
+	def on_batch_end(self, batch, logs={}):        	
+		self.report(batch,size=42000)
+		while self.state[0] == 'pause':
+			self.report(batch,size=42000)
+			time.sleep(.3)
         	       
         	# self.report(batch, size=42000)
 	        # while self.state == 'pause':
