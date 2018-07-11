@@ -20,6 +20,8 @@ import keras
 class My_callback(keras.callbacks.Callback):
     def __init__(self,queue,my_id, state,):
         self.queue = queue
+        self.state = state
+        self.my_id = my_id
     def on_train_begin(self, logs={}):
     	return
 
@@ -28,8 +30,8 @@ class My_callback(keras.callbacks.Callback):
 	        while state == 'pause':
 	        	time.sleep(.3)
 	        d = {
-	            'message': state,
-	            'id': my_id,
+	            'message': self.state,
+	            'id': self.my_id,
 	            'progress': round((batch*32/(42000)*4),4)
 	        }
 	        response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
