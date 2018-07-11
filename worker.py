@@ -23,9 +23,10 @@ class My_callback(keras.callbacks.Callback):
         self.state = state
         self.my_id = my_id
     def on_train_begin(self, logs={}):
-    	return
+    	print("BEGINNNN")
 
     def report(self, i, size=100):
+        print('reporting')
         d = {
             'message': self.state,
             'id': self.my_id,
@@ -34,10 +35,11 @@ class My_callback(keras.callbacks.Callback):
         response = self.queue.send_message(MessageBody=json.dumps(d), MessageGroupId='model_bots')
 
     def on_batch_end(self, batch, logs={}):
-        	self.report(batch, size=42000)
-	        while self.state == 'pause':
-	        	self.report(batch, size=42000)
-	        	time.sleep(.3)		        
+        	print("FUCKKKKK")
+        	# self.report(batch, size=42000)
+	        # while self.state == 'pause':
+	        # 	self.report(batch, size=42000)
+	        # 	time.sleep(.3)		        
 
 class Worker():
 
