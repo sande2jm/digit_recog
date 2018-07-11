@@ -184,7 +184,7 @@ class Worker():
 
 	def put_in_Dynamo(self, *args):
 		acc = args
-		print(acc[0])
+		print(acc[0], acc)
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
