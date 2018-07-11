@@ -26,12 +26,7 @@ class My_callback(keras.callbacks.Callback):
     	return
 
     def on_batch_end(self, batch, logs={}):
-        	if batch%10 == 0:
-        		self.report(batch, size=42000)
-	        while self.state == 'pause':
-	        	self.report(batch, size=42000)
-	        	time.sleep(.3)	   
-
+        	pass	   
 	def report(self,i, size = 100):
 		"""
 		Post to swarm queue my progress and state
