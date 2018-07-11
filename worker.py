@@ -180,9 +180,10 @@ class Worker():
 		self.my_callback_object = My_callback(self.queue, self.my_id, self.state)
 		history = self.model.fit(self.x,self.y,epochs=1, callbacks=[self.my_callback_object])
 		print(history)
-		self.put_in_Dynamo()
+		self.put_in_Dynamo(history)
 
 	def put_in_Dynamo(self, *args):
+		history = args
 		batch_size = self.params['batch_size']
 		learning_rate = self.params['learning_rate']
 		epochs = self.params['epochs']
@@ -193,14 +194,16 @@ class Worker():
 		    Key={
 		    'id': self.my_id
 		    },
-		    UpdateExpression='SET #a = :val1, #b = :val2, #c = :val3, #d = :val4, #e = :val5, #f = :val6',
+		    UpdateExpression='SET #a = :val1, #b = :val2, #c = :val3, #d = :val4, #e = :val5, #f = :val6 #g = :val7', 
 		    ExpressionAttributeNames={
 		        '#a': 'batch_size',
 		        '#b': 'learning_rate',
 		        '#c': 'epochs',
 		        '#d': 'dropout_rate',
 		        '#e': 'train',
-		        '#f': 'test'
+		        '#f': 'test',
+		        '#g': 'train_accuracy',
+
 
 		    },
 		    ExpressionAttributeValues={
@@ -209,7 +212,8 @@ class Worker():
 		        ':val3': epochs,
 		        ':val4': decimal.Decimal(str(dropout_rate)),
 		        ':val5': train,
-		        ':val6': test
+		        ':val6': test,
+		        ':val7': history['accuracy']
 		    }
 		)
 
